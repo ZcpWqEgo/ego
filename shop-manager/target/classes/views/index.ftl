@@ -204,7 +204,7 @@
                             <a href='促销管理/订单促销.html' target='rightContent'><i class="fa fa-circle-o"></i>订单促销</a>
                         </li>
                         <li onclick="makecss(this)" data-id="index_Coupon">
-                            <a href='促销管理/代金券管理.html' target='rightContent'><i class="fa fa-circle-o"></i>代金券管理</a>
+                            <a href='promotion/coupon.ftl' target='rightContent'><i class="fa fa-circle-o"></i>代金券管理</a>
                         </li>
                         <li onclick="makecss(this)" data-id="pre_sell_list_Promotion">
                         </li>

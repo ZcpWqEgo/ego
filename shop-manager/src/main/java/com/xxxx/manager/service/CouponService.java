@@ -1,6 +1,8 @@
 package com.xxxx.manager.service;
 
+import com.xxxx.common.result.BaseResult;
 import com.xxxx.manager.pojo.Coupon;
+import com.xxxx.manager.pojo.Goods;
 
 import java.util.List;
 /**
@@ -15,4 +17,5 @@ public interface CouponService {
      * @return
      */
     List<Coupon> selectCouponListByPage(Integer pageNum, Integer pageSize);
+    BaseResult selectCouponsListByPage(Integer pageNum, Integer pageSize);
 }

@@ -1,4 +1,6 @@
 <#assign ctx=request.contextPath/>
+<#include "date.ftl">
+<#setting datetime_format="yyyy-MM-dd"/>
 <html><head>
     <meta charset="UTF-8">
     <title>ego管理后台</title>
@@ -19,7 +21,8 @@
     <!-- iCheck -->
     <link href="${ctx}/static/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css">
     <!-- jQuery 2.1.4 -->
-    <script src="${ctx}/static/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<#--    <script src="${ctx}/static/plugins/jQuery/jQuery-2.1.4.min.js"></script>-->
+    <script src="${ctx}/static/js/jquery-3.5.1.min.js"></script>
 	<script src="${ctx}/static/js/global.js"></script>
     <script src="${ctx}/static/js/myFormValidate.js"></script>
     <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -106,12 +109,14 @@
     		}
     	);	
     }
+
     </script>        
   <meta name="__hash__" content="caf85ed63fd21bb70fe7f536bb1b3b50_3f0196329b9e9c21b80f4c440426a7eb"></head>
   <body style="background-color:#ecf0f5;">
  
 
 <div class="wrapper">
+
     <div class="breadcrumbs" id="breadcrumbs">
 	<ol class="breadcrumb">
 	<li><a href="javascript:void();"><i class="fa fa-home"></i>&nbsp;&nbsp;后台首页</a></li>
@@ -138,7 +143,7 @@
 				            <button type="submit" class="btn btn-default">提交</button>
                          -->   
 				            <div class="form-group pull-right">
-					            <a href="代金券管理-添加优惠券.html" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加优惠券</a>
+					            <a href="coupon-add.ftl" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加优惠券</a>
 				            </div>		          
 			          <input name="__hash__" value="caf85ed63fd21bb70fe7f536bb1b3b50_3f0196329b9e9c21b80f4c440426a7eb" type="hidden"></form>
 	                </div>
@@ -159,182 +164,85 @@
                                     <td class="text-center">操作</td>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
+                                <tbody id="couponsContent">
+                                <#list couponList as coupon>
+                                    <tr>
                                         <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
+                                            <input name="selected[]" value="${coupon.id}" type="checkbox">
                                         </td>
-                                        <td class="text-center">ego代金券10元</td>
-                                        <td class="text-center">按用户发放</td>
-                                        <td class="text-center">10.00</td>
-                                        <td class="text-center">100.00</td>
-                                        <td class="text-center">10</td>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2016-09-21</td>
+                                        <td class="text-center">${coupon.name}</td>
                                         <td class="text-center">
-                                           	<a href="javascript:void(0)" data-toggle="tooltip" title="发放" class="btn btn-info send_user" data-url="代金券管理-发放优惠券.html"><i class="fa fa-send-o"></i></a>
-                                            <a href="coupon-list.html" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
+                                            <#if coupon.type==0>
+                                                面额模板
+                                            </#if>
+                                            <#if coupon.type==1>
+                                                按用户发放
+                                            </#if>
+                                            <#if coupon.type==2>
+                                                注册
+                                            </#if>
+                                            <#if coupon.type==3>
+                                                邀请
+                                            </#if>
+                                            <#if coupon.type==4>
+                                                线下发放
+                                            </#if>
+                                        </td>
+                                        <td class="text-center">${coupon.money}</td>
+                                        <td class="text-center">${coupon.condition}</td>
+                                        <td class="text-center">${coupon.createnum}</td>
+                                        <td class="text-center">${coupon.sendNum}</td>
+                                        <td class="text-center">${coupon.useNum}</td>
+                                        <td class="text-center">
+                                            ${((coupon.useEndTime)?c?number *1000)?number_to_datetime}
+                                        </td>
+                                        <td class="text-center">
+                                            <#if coupon.createnum==coupon.sendNum>
+                                                <a href="javascript:void(0)" data-toggle="tooltip" title="发放" class="btn btn-info send_user" data-url="coupon-grant.ftl"><i class="fa fa-send-o"></i></a>
+                                            </#if>
+                                            <#if coupon.createnum!=coupon.sendNum>
+                                                <a href="/index/Admin/Coupon/make_coupon/id/12/type/4" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>
+                                            </#if>
+                                            <a href="coupon-list.ftl" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
                                             <a href="/index/Admin/Coupon/coupon_info/id/14" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
                                             <a data-url="/index/Admin/Coupon/del_coupon/id/14" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">50元代金券</td>
-                                        <td class="text-center">线下发放</td>
-                                        <td class="text-center">50.00</td>
-                                        <td class="text-center">150.00</td>
-                                        <td class="text-center">100</td>
-                                        <td class="text-center">10</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2016-09-01</td>
-                                        <td class="text-center">
-                                            <a href="/index/Admin/Coupon/make_coupon/id/13/type/4" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>
-                                                                                        <a href="/index/Admin/Coupon/coupon_list/id/13" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/13" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/13" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">5元线下券</td>
-                                        <td class="text-center">线下发放</td>
-                                        <td class="text-center">7.00</td>
-                                        <td class="text-center">50.00</td>
-                                        <td class="text-center">100</td>
-                                        <td class="text-center">57</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2016-07-21</td>
-                                        <td class="text-center">
-                                            <a href="/index/Admin/Coupon/make_coupon/id/12/type/4" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>
-                                                                                        <a href="/index/Admin/Coupon/coupon_list/id/12" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/12" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/12" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">代金券10块</td>
-                                        <td class="text-center">面额模板</td>
-                                        <td class="text-center">10.00</td>
-                                        <td class="text-center">100.00</td>
-                                        <td class="text-center">100</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2016-07-31</td>
-                                        <td class="text-center">
-                                                                                        	<a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-default disabled" data-original-title="查看"><i class="fa fa-send-o"></i></a>                                            <a href="/index/Admin/Coupon/coupon_list/id/11" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/11" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/11" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">按用户发放优惠券</td>
-                                        <td class="text-center">线下发放</td>
-                                        <td class="text-center">10.00</td>
-                                        <td class="text-center">100.00</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2016-07-02</td>
-                                        <td class="text-center">
-                                            <a href="/index/Admin/Coupon/make_coupon/id/10/type/4" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>
-                                                                                        <a href="/index/Admin/Coupon/coupon_list/id/10" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/10" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/10" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">订单满100送10元代金券</td>
-                                        <td class="text-center">按用户发放</td>
-                                        <td class="text-center">10.00</td>
-                                        <td class="text-center">100.00</td>
-                                        <td class="text-center">100</td>
-                                        <td class="text-center">23</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2016-07-02</td>
-                                        <td class="text-center">
-                                                                                        	<a href="javascript:void(0)" data-toggle="tooltip" title="发放" class="btn btn-info send_user" data-url="/index/Admin/Coupon/send_coupon/cid/9"><i class="fa fa-send-o"></i></a>
-                                                                                        <a href="/index/Admin/Coupon/coupon_list/id/9" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/9" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/9" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">按用户类型发放</td>
-                                        <td class="text-center">线下发放</td>
-                                        <td class="text-center">30.00</td>
-                                        <td class="text-center">100.00</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">50</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2015-12-11</td>
-                                        <td class="text-center">
-                                            <a href="/index/Admin/Coupon/make_coupon/id/3/type/4" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>
-                                                                                        <a href="/index/Admin/Coupon/coupon_list/id/3" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/3" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/3" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">订单满100优惠券</td>
-                                        <td class="text-center">按用户发放</td>
-                                        <td class="text-center">20.00</td>
-                                        <td class="text-center">100.00</td>
-                                        <td class="text-center">11</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2015-12-11</td>
-                                        <td class="text-center">
-                                                                                        	<a href="javascript:void(0)" data-toggle="tooltip" title="发放" class="btn btn-info send_user" data-url="/index/Admin/Coupon/send_coupon/cid/2"><i class="fa fa-send-o"></i></a>
-                                                                                        <a href="/index/Admin/Coupon/coupon_list/id/2" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/2" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/2" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">注册优惠券</td>
-                                        <td class="text-center">注册发放</td>
-                                        <td class="text-center">50.00</td>
-                                        <td class="text-center">200.00</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2015-12-11</td>
-                                        <td class="text-center">
-                                                                                        	<a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-default disabled" data-original-title="查看"><i class="fa fa-send-o"></i></a>                                            <a href="/index/Admin/Coupon/coupon_list/id/1" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/1" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/1" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr><tr>
-                                        <td class="text-center">
-                                            <input name="selected[]" value="6" type="checkbox">
-                                        </td>
-                                        <td class="text-center">50代金券</td>
-                                        <td class="text-center">面额模板</td>
-                                        <td class="text-center">50.00</td>
-                                        <td class="text-center">500.00</td>
-                                        <td class="text-center">100</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">2016-11-01</td>
-                                        <td class="text-center">
-                                                                                        	<a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-default disabled" data-original-title="查看"><i class="fa fa-send-o"></i></a>                                            <a href="/index/Admin/Coupon/coupon_list/id/7" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
-                                            <a href="/index/Admin/Coupon/coupon_info/id/7" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
-                                            <a data-url="/index/Admin/Coupon/del_coupon/id/7" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr>                                </tbody>
+                                    </tr>
+                                </#list>
+                               </tbody>
                             </table>
                         </div>
                     </div>
-				 <div class="row">
-              	    <div class="col-sm-6 text-left"></div>
-                    <div class="col-sm-6 text-right"><div class="dataTables_paginate paging_simple_numbers"><ul class="pagination">  <li class="paginate_button active"><a tabindex="0" data-dt-idx="1" aria-controls="example1" href="#">1</a></li><li class="paginate_button"><a class="num" href="/index/Admin/Coupon/index/p/2">2</a></li> <li id="example1_next" class="paginate_button next"><a class="next" href="/index/Admin/Coupon/index/p/2">下一页</a></li> </ul></div></div>		
-	              </div>                    
+                    <div class="row">
+                        <div class="col-sm-6 text-left"></div>
+                        <div class="col-sm-6 text-right">
+                            <div class="dataTables_paginate paging_simple_numbers">
+                                <ul class="pagination">
+                                    <#list 1..couponPage.pageInfo.pages as i>
+                                    <#if i==couponPage.pageInfo.pageNum>
+                                        <li class="paginate_button active">
+                                            <a tabindex="0" data-dt-idx="1" aria-controls="example1" href="${ctx}/promotion/coupon?pageNum=${i}">${i}</a>
+                                        </li>
+                                    <#else>
+                                        <li class="paginate_button">
+                                            <a class="num" href="${ctx}/promotion/coupon?pageNum=${i}">${i}</a>
+                                        </li>
+                                    </#if>
+
+
+
+                                    </#list>
+                                    <#if couponPage.pageInfo.pageNum!=couponPage.pageInfo.pages>
+
+                                        <li id="example1_next" class="paginate_button next">
+                                            <a class="next" href="${ctx}/promotion/coupon?pageNum=${couponPage.pageInfo.nextPage}">下一页</a>
+                                        </li>
+                                    </#if>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
 				  </div>
                 </div>
             </div>
