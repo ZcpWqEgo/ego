@@ -3,6 +3,7 @@ package com.xxxx.manager.service;
 import com.xxxx.common.result.BaseResult;
 import com.xxxx.manager.pojo.Coupon;
 import com.xxxx.manager.pojo.Goods;
+import com.xxxx.manager.pojo.User;
 
 import java.util.List;
 /**
@@ -18,4 +19,7 @@ public interface CouponService {
      */
     List<Coupon> selectCouponListByPage(Integer pageNum, Integer pageSize);
     BaseResult selectCouponsListByPage(Integer pageNum, Integer pageSize);
+    int insertTypeCoupon(Coupon coupon);
+    BaseResult selectUserList(Integer pageNum, Integer pageSize,String inputMobile,String inputEmail,String inputNickname);
+    List<User> selectUser(Integer pageNum, Integer pageSize,String inputMobile,String inputEmail,String inputNickname);
 }

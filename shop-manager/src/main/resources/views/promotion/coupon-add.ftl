@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<#assign ctx=request.contextPath/>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -6,25 +6,26 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.4 -->
-    <link href="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- FontAwesome 4.3.0 -->
- 	<link href="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/bootstrap/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+ 	<link href="${ctx}/static/bootstrap/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons 2.0.0 --
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
     	folder instead of downloading all of them to reduce the load. -->
-    <link href="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
     <!-- jQuery 2.1.4 -->
-    <script src="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-	<script src="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/js/global.js"></script>
-    <script src="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/js/myFormValidate.js"></script>
-    <script src="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/js/layer/layer-min.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
-    <script src="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/js/myAjax.js"></script>
+    <script src="${ctx}/static/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<script src="${ctx}/static/js/global.js"></script>
+    <script src="${ctx}/static/js/myFormValidate.js"></script>
+    <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/layer/layer-min.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
+	  <link href="${ctx}/static/js/layer/skin/layer.css" rel="stylesheet" type="text/css">
+    <script src="${ctx}/static/js/myAjax.js"></script>
     <script type="text/javascript">
     function delfunc(obj){
     	layer.confirm('确认删除？', {
@@ -110,9 +111,9 @@
   <body style="background-color:#ecf0f5;">
  
 
-<link href="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-<script src="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
-<script src="../../../../../../../../高级第二阶段/day01/002_software/后台管理系统-页面/Public/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<link href="${ctx}/static/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="${ctx}/static/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 <div class="wrapper">
     <div class="breadcrumbs" id="breadcrumbs">
 	<ol class="breadcrumb">
@@ -239,7 +240,7 @@
                                 		<input type="hidden" name="id" value="">
                                 	</td>
                                 	<td class="col-sm-4"></td>
-                                	<td class="text-right"><input class="btn btn-primary" type="submit" value="保存"></td>
+                                	<td class="text-right"><input class="btn btn-primary" type="submit" value="保存" onclick="add_coupon_ajax()"></td>
                                 	</tr>
                                 </tfoot>                               
                             </table>
@@ -278,7 +279,7 @@ function data_pick(id){
         showDropdowns: true,
         minDate:myDate.getFullYear()+'-'+myDate.getMonth()+'-'+myDate.getDate(),
         maxDate:'2030-01-01',
-		timePicker : true, //是否显示小时和分钟  
+		timePicker : true, //是否显示小时和分钟
         timePickerIncrement:1,//time选择递增数
 		timePicker12Hour : false, //是否使用12小时制来显示时间 		
         locale : {
@@ -292,6 +293,38 @@ function data_pick(id){
             firstDay : 1
         }
     });
+}
+function  add_coupon_ajax() {
+	// console.log($("#name").val()+"\n"+$("#money").val()+"\n"+$("#condition").val()+"\n"+$('input:radio:checked').val()+"\n"+$("#createnum").val()+"\n"+$("#send_start_time").val()+"\n"+$("#send_end_time").val()+"\n"+$("#use_start_time").val()+"\n"+$("#use_end_time").val());
+
+	$.ajax({
+		url: "${ctx}/promotion/coupon_add",
+		type: "POST",
+		data: {
+			name: $("#name").val(),
+			money: $("#money").val(),
+			condition:$("#condition").val(),
+			orderstatus: $('input:radio:checked').val(),
+			createnum: $("#createnum").val(),
+			send_start_time: $("#send_start_time").val(),
+			send_end_time: $("#send_end_time").val(),
+			use_start_time: $("#use_start_time").val(),
+			use_end_time: $("#use_end_time").val()
+		},
+		success: function (result) {
+				if (result.code == 200) {
+					layer.confirm("保存成功", {btn: ['继续新增', '返回列表']},
+							function () {
+								window.location.href = "${ctx}/promotion/coupon";
+							}, function () {
+								window.location.href = "${ctx}/promotion/coupon-add";
+							});
+
+				} else {
+					console.log("添加失败")
+				}
+		}
+	});
 }
 </script>
 </body>

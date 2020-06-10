@@ -24,16 +24,16 @@
             <foreach collection="criteria.criteria" item="criterion">
               <choose>
                 <when test="criterion.noValue">
-                  and ${criterion.`condition`}
+                  and ${criterion.condition}
                 </when>
                 <when test="criterion.singleValue">
-                  and ${criterion.`condition`} #{criterion.value}
+                  and ${criterion.condition} #{criterion.value}
                 </when>
                 <when test="criterion.betweenValue">
-                  and ${criterion.`condition`} #{criterion.value} and #{criterion.secondValue}
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
                 <when test="criterion.listValue">
-                  and ${criterion.`condition`}
+                  and ${criterion.condition}
                   <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
@@ -62,7 +62,7 @@
                   and ${criterion.`condition`} #{criterion.value} and #{criterion.secondValue}
                 </when>
                 <when test="criterion.listValue">
-                  and ${criterion.`condition`}
+                  and ${criterion.condition}
                   <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
@@ -113,12 +113,12 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_coupon (name, type, money, 
-      `condition`, createnum, send_num, 
+      `condition`, createnum, send_num,
       use_num, send_start_time, send_end_time, 
       use_start_time, use_end_time, add_time
       )
     values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{money,jdbcType=DECIMAL}, 
-      #{`condition`,jdbcType=DECIMAL}, #{createnum,jdbcType=INTEGER}, #{sendNum,jdbcType=INTEGER}, 
+      #{condition,jdbcType=DECIMAL}, #{createnum,jdbcType=INTEGER}, #{sendNum,jdbcType=INTEGER},
       #{useNum,jdbcType=INTEGER}, #{sendStartTime,jdbcType=INTEGER}, #{sendEndTime,jdbcType=INTEGER}, 
       #{useStartTime,jdbcType=INTEGER}, #{useEndTime,jdbcType=INTEGER}, #{addTime,jdbcType=INTEGER}
       )
@@ -177,7 +177,7 @@
         #{money,jdbcType=DECIMAL},
       </if>
       <if test="`condition` != null">
-        #{`condition`,jdbcType=DECIMAL},
+        #{condition,jdbcType=DECIMAL},
       </if>
       <if test="createnum != null">
         #{createnum,jdbcType=INTEGER},
@@ -227,7 +227,7 @@
         money = #{record.money,jdbcType=DECIMAL},
       </if>
       <if test="record.`condition` != null">
-        `condition` = #{record.`condition`,jdbcType=DECIMAL},
+        `condition` = #{record.condition,jdbcType=DECIMAL},
       </if>
       <if test="record.createnum != null">
         createnum = #{record.createnum,jdbcType=INTEGER},
@@ -264,7 +264,7 @@
       name = #{record.name,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=TINYINT},
       money = #{record.money,jdbcType=DECIMAL},
-      `condition` = #{record.`condition`,jdbcType=DECIMAL},
+      `condition` = #{record.condition,jdbcType=DECIMAL},
       createnum = #{record.createnum,jdbcType=INTEGER},
       send_num = #{record.sendNum,jdbcType=INTEGER},
       use_num = #{record.useNum,jdbcType=INTEGER},
@@ -290,7 +290,7 @@
         money = #{money,jdbcType=DECIMAL},
       </if>
       <if test="`condition` != null">
-        `condition` = #{`condition`,jdbcType=DECIMAL},
+        `condition` = #{condition,jdbcType=DECIMAL},
       </if>
       <if test="createnum != null">
         createnum = #{createnum,jdbcType=INTEGER},
@@ -324,7 +324,7 @@
     set name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT},
       money = #{money,jdbcType=DECIMAL},
-      `condition` = #{`condition`,jdbcType=DECIMAL},
+      `condition` = #{condition,jdbcType=DECIMAL},
       createnum = #{createnum,jdbcType=INTEGER},
       send_num = #{sendNum,jdbcType=INTEGER},
       use_num = #{useNum,jdbcType=INTEGER},

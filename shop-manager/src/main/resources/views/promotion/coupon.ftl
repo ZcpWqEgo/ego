@@ -143,7 +143,7 @@
 				            <button type="submit" class="btn btn-default">提交</button>
                          -->   
 				            <div class="form-group pull-right">
-					            <a href="coupon-add.ftl" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加优惠券</a>
+					            <a href="${ctx}/promotion/add" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加优惠券</a>
 				            </div>		          
 			          <input name="__hash__" value="caf85ed63fd21bb70fe7f536bb1b3b50_3f0196329b9e9c21b80f4c440426a7eb" type="hidden"></form>
 	                </div>
@@ -194,14 +194,19 @@
                                         <td class="text-center">${coupon.sendNum}</td>
                                         <td class="text-center">${coupon.useNum}</td>
                                         <td class="text-center">
-                                            ${((coupon.useEndTime)?c?number *1000)?number_to_datetime}
+                                            <#if coupon.useEndTime?exists>
+                                                ${((coupon.useEndTime)?c?number *1000)?number_to_datetime}
+                                                <#else >
+                                                无限制
+                                            </#if>
+
                                         </td>
                                         <td class="text-center">
                                             <#if coupon.createnum==coupon.sendNum>
-                                                <a href="javascript:void(0)" data-toggle="tooltip" title="发放" class="btn btn-info send_user" data-url="coupon-grant.ftl"><i class="fa fa-send-o"></i></a>
+                                                <a href="${ctx}/promotion/grantList?id=${coupon.id}" data-toggle="tooltip" title="发放" class="btn btn-info send_user" data-url=""><i class="fa fa-send-o"></i></a>
                                             </#if>
                                             <#if coupon.createnum!=coupon.sendNum>
-                                                <a href="/index/Admin/Coupon/make_coupon/id/12/type/4" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>
+                                                <a href="${ctx}/promotion/grantList?id=${coupon.id}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>
                                             </#if>
                                             <a href="coupon-list.ftl" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
                                             <a href="/index/Admin/Coupon/coupon_info/id/14" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
@@ -227,11 +232,8 @@
                                             <a class="num" href="${ctx}/promotion/coupon?pageNum=${i}">${i}</a>
                                         </li>
                                     </#if>
-
-
-
                                     </#list>
-                                    <#if couponPage.pageInfo.pageNum!=couponPage.pageInfo.pages>
+                                    <#if couponPage.pageInfo.hasNextPage>
 
                                         <li id="example1_next" class="paginate_button next">
                                             <a class="next" href="${ctx}/promotion/coupon?pageNum=${couponPage.pageInfo.nextPage}">下一页</a>

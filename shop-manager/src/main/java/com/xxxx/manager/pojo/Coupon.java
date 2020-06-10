@@ -22,7 +22,7 @@ public class Coupon implements Serializable {
     /**
      * 发放类型 0面额模板1 按用户发放 2 注册 3 邀请 4 线下发放
      */
-    private Byte type;
+    private Integer type;
 
     /**
      * 优惠券金额
@@ -87,6 +87,10 @@ public class Coupon implements Serializable {
         this.id = id;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String getName() {
         return name;
     }
@@ -95,11 +99,11 @@ public class Coupon implements Serializable {
         this.name = name == null ? null : name.trim();
     }
 
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
